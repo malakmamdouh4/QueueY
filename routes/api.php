@@ -32,8 +32,19 @@ Route::group(['prefix'=>'user','middleware'=>'api'],function ()
 });
 
 
+   // to get all destinations that they are in app
+Route::get('getAllDestination','ShowController@getAllDestination');
+
+  // to get destination that belongs to a specific user by using user_id
+Route::get('getDestination/{id}','ShowController@getDestination');
+
+  // to get all areas that belong to a specific destination by using destination_id
+Route::get('getArea/{id}','ShowController@getArea');
+
+  // to get all services that belong to a specific area by using area_id
+Route::get('getService/{id}','ShowController@getService');
 
 
-
+Route::get('getDate','BookingController@getDate');
 
 

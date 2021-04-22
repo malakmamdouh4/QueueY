@@ -8,7 +8,22 @@ class Area extends Model
 {
 
     protected $fillable = [
-        'name' , 'destinationId' ,'userId' , 'created_at' ,'updated_at'
+        'name' , 'destination_id' ,'user_id' , 'created_at' ,'updated_at'
     ];
+
+    protected $hidden = [
+        'destination'  //  hidden to get method 'ShowController@getArea'
+    ];
+
+    public function destination()
+    {
+        return $this->belongsTo('App\Destination','destination_id');
+    }
+
+    public function service()
+    {
+        return $this->hasMany('App\Service','area_id');
+    }
+
 
 }

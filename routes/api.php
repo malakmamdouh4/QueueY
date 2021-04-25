@@ -23,7 +23,7 @@ Route::group(['prefix'=>'user','middleware'=>'api'],function ()
 {
     Route::post('/register','userController@register');                    // to sign up as a user
     Route::post('/login','userController@login');;                         // to login as a user
-    Route::get('/profile/{id}','userController@userProfile');          // to get into user profile
+    Route::get('/profile/{id}','userController@userProfile');              // to get into user profile
     Route::put('/editName/{id}','userController@editName');                // to edit user name
     Route::get('/showPassword/{id}','userController@showPassword');        // to get old password
     Route::put('/editPassword/{id}','userController@editPassword');        // to update new password
@@ -45,6 +45,9 @@ Route::get('getArea/{id}','ShowController@getArea');
 Route::get('getService/{id}','ShowController@getService');
 
 
+//Route::get('getDate','BookingController@getDate');
+
 Route::get('getDate','BookingController@getDate');
+Route::put('updateStatus/{id}','BookingController@updateStatus');
 
 

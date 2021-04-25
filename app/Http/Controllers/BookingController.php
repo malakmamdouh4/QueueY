@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Lab;
+use App\TimeLab;
 use App\Traits\GeneralTrait;
+
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -18,7 +20,16 @@ class BookingController extends Controller
 
      public function getDate()
      {
-         $date = Lab::select()->get();
-         return $this->returnData('Name',$date,'success','201');
+         //$lab = Lab::findOrFail($id);
+         $timelab = TimeLab::with('lab')->select('value','lab_id')->get();
+         return $this->returnData('Day',$timelab,'success','201');
      }
+    public function updateStatus($id)
+    {
+        $date = TimeLab::find($id);
+        $date->active = "1";
+        $date->save();
+        return ('success');
+    }
+
 }

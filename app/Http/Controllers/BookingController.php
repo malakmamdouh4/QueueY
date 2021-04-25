@@ -21,9 +21,11 @@ class BookingController extends Controller
      public function getDate()
      {
          //$lab = Lab::findOrFail($id);
-         $timelab = TimeLab::with('lab')->select('value','lab_id')->get();
+         $timelab = TimeLab::with('lab')->select('value', 'active','lab_id')->get();
          return $this->returnData('Day',$timelab,'success','201');
      }
+
+
     public function updateStatus($id)
     {
         $date = TimeLab::find($id);

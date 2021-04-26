@@ -48,6 +48,16 @@ Route::get('getService/{id}','ShowController@getService');
 //Route::get('getDate','BookingController@getDate');
 
 Route::get('getDate','BookingController@getDate');
+
 Route::put('updateStatus/{id}','BookingController@updateStatus');
+
+Route::get('getDepartment','BookingController@getDepartment');
+
+//Route::get('image/{filename}','BookingController@image');
+
+Route::get('getDoctor/{id}','BookingController@getDoctor');
+
+
+
 
 

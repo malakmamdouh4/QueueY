@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Area;
+use App\Department;
+use App\Doctor;
 use App\Lab;
 use App\TimeLab;
 use App\Traits\GeneralTrait;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookingController extends Controller
 {
@@ -33,5 +37,28 @@ class BookingController extends Controller
         $date->save();
         return ('success');
     }
+
+    public function getDepartment(){
+         $depart = Department::select('name')->get();
+         return response()->json($depart);
+    }
+////    public function image($fileName){
+////        $path = public_path().'/uploads/images/'.$fileName;
+////        return Response::download($path);
+////    }
+//    public function image(request $request ,$filename){
+//   $file = $request->file('image');
+//      // $file= $request->file('image')->getClientOriginalExtension();
+//        $destinationPath = "public";
+//    //$filename = $file->extension();
+//    Storage::putFileAs($destinationPath, $file, $filename);
+//         return['image'=> asset('public/' . $this->image->name)];
+//
+//    }
+        public function getDoctor($id){
+            $doctor = Doctor::with('department')->select('name','department_id')->where('department_id',$id)->get();
+            return $this->returnData('Name',$doctor,'success get','201');
+        }
+
 
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Area;
-use App\Destination;
-use App\Service;
+use App\Models\Area;
+use App\Models\Destination;
+use App\Models\Service;
 use App\Traits\GeneralTrait;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ShowController extends Controller

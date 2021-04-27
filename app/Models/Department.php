@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class Department extends Model
 
 
     public function doctor(){
-        return $this->hasMany('App\Doctor','department_id');
+        return $this->hasMany('App\Models\Doctor','department_id');
     }
 
 }

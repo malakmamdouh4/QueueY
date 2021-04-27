@@ -32,7 +32,7 @@ Route::group(['prefix'=>'user','middleware'=>'api'],function ()
 });
 
 
-   // to get all destinations that they are in app
+  // to get all destinations that they are in app
 Route::get('getAllDestination','ShowController@getAllDestination');
 
   // to get destination that belongs to a specific user by using user_id
@@ -44,20 +44,27 @@ Route::get('getArea/{id}','ShowController@getArea');
   // to get all services that belong to a specific area by using area_id
 Route::get('getService/{id}','ShowController@getService');
 
-
-//Route::get('getDate','BookingController@getDate');
-
+  // to get all appointments ( booked or not ) in lab service
 Route::get('getDate','BookingController@getDate');
 
+  // to book specific appointment by using id
 Route::put('updateStatus/{id}','BookingController@updateStatus');
 
+  // to get all departments in area
 Route::get('getDepartment','BookingController@getDepartment');
 
-//Route::get('image/{filename}','BookingController@image');
-
+  // to get all doctors that belong to a specific department by using department_id
 Route::get('getDoctor/{id}','BookingController@getDoctor');
 
+  // to get all available days
+Route::get('getDayMeetings','bookingController@getDayMeetings');
+
+  // to get all times that belongs to a specific day
+Route::get('getTimeMeetings/{id}','bookingController@getTimeMeetings');
+
+  // to book meeting
+Route::post('bookMeeting','bookingController@bookMeeting');
 
 
 
-
+//Route::get('image/{filename}','BookingController@image');

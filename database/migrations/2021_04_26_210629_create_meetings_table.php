@@ -18,15 +18,14 @@ class CreateMeetingsTable extends Migration
             $table->string('name');
             $table->integer('idNumber');
             $table->string('topic');
+            $table->unsignedBigInteger('day_meeting_id')->nullable();
+            $table->foreign('day_meeting_id')->references('id')->on('day_meetings');
+            $table->unsignedBigInteger('time_meeting_id')->nullable();
+            $table->foreign('time_meeting_id')->references('id')->on('time_meetings');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('doctor_id')->nullable();
             $table->foreign('doctor_id')->references('id')->on('doctors');
-            $table->unsignedBigInteger('dayMeeting_id');
-            $table->foreign('dayMeeting_id')->references('id')->on('day_meetings');
-            $table->unsignedBigInteger('timeMeeting_id');
-            $table->foreign('timeMeeting_id')->references('id')->on('time_meetings');
-
             $table->timestamps();
         });
     }

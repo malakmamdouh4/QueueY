@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +17,6 @@ class Service extends Model
 
     public function area()
     {
-        return $this->belongsTo('App\Area','area_id');
+        return $this->belongsTo('App\Models\Area','area_id');
     }
 }

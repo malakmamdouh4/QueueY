@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +13,6 @@ class Lab extends Model
     protected $hidden =['created_at' ,'updated_at','id'];
 
     public function timeLab(){
-        return $this->hasMany('App\TimeLab','lab_id');
+        return $this->hasMany('App\Models\TimeLab','lab_id');
     }
 }

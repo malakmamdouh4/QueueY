@@ -16,6 +16,7 @@ class CreateDayMeetingsTable extends Migration
         Schema::create('day_meetings', function (Blueprint $table) {
             $table->id();
             $table->string('day');
+            $table->integer('active')->default(0)->nullable();
             $table->timestamps();
         });
     }

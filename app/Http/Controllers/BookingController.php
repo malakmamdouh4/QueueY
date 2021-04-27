@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Area;
-use App\Department;
-use App\Doctor;
-use App\Lab;
-use App\TimeLab;
+use App\Models\Area;
+use App\Models\DayMeeting;
+use App\Models\Department;
+use App\Models\Doctor;
+use App\Models\Lab;
+use App\Models\Meeting;
+use App\Models\TimeLab;
+use App\Models\TimeMeeting;
 use App\Traits\GeneralTrait;
 
 use Illuminate\Http\Request;
@@ -14,38 +17,90 @@ use Illuminate\Support\Facades\Storage;
 
 class BookingController extends Controller
 {
+
     use GeneralTrait ;
-//    public function index(Request $request)
-//    {
-//        $customers = Customer::where('active',$request->query('active',0))->get();
-//        return view('custom.index',compact('customers'));
-//    }
 
 
+     // to get all appointments ( booked or not ) in lab service
      public function getDate()
      {
-         //$lab = Lab::findOrFail($id);
          $timelab = TimeLab::with('lab')->select('value', 'active','lab_id')->get();
          return $this->returnData('Day',$timelab,'success','201');
      }
 
 
+     // to book specific appointment by using appointment_id
     public function updateStatus($id)
     {
         $date = TimeLab::find($id);
         $date->active = "1";
         $date->save();
-        return ('success');
+        return $this->returnSuccessMessage('Lab is booked successfully','201');
     }
 
-    public function getDepartment(){
+
+    // to get all departments in area ( faculty )
+    public function getDepartment()
+    {
          $depart = Department::select('name')->get();
          return response()->json($depart);
     }
-////    public function image($fileName){
-////        $path = public_path().'/uploads/images/'.$fileName;
-////        return Response::download($path);
-////    }
+
+
+    // to get all doctors that belong to a specific department by using department_id
+    public function getDoctor($id)
+    {
+         $doctor = Doctor::with('department')->select('name','department_id')
+             ->where('department_id',$id)->get();
+         return $this->returnData('Name',$doctor,'success get','201');
+    }
+
+
+    // to get all available days
+    public function getDayMeetings(Request $request)
+    {
+        $dayMeeting = DayMeeting::where('active',$request->query('active',0))->get();
+        return $this->returnData('Days',$dayMeeting,'there are available days','201');
+    }
+
+
+    // to get all times that belongs to a specific day
+    public function getTimeMeetings($id)
+    {
+        $times = TimeMeeting::with('day')->select('time')
+            ->where('day_meeting_id',$id)->get();
+        return $this->returnData('Time',$times,'There are times belong to this day','201');
+    }
+
+
+    // to book meeting
+    public function bookMeeting(Request $request)
+    {
+        $meeting = Meeting::create([
+            'name' => $request->input('name'),
+            'idNumber' => $request->input('Id_Number'),
+            'topic' => $request->input('topic'),
+            'day_meeting_id' => $request->input('Booking_Day'),
+            'time_meeting_id' => $request->input('Slot_Time'),
+        ]);
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+//    public function image($fileName){
+//        $path = public_path().'/uploads/images/'.$fileName;
+//        return Response::download($path);
+//      }
+
 //    public function image(request $request ,$filename){
 //   $file = $request->file('image');
 //      // $file= $request->file('image')->getClientOriginalExtension();
@@ -55,10 +110,3 @@ class BookingController extends Controller
 //         return['image'=> asset('public/' . $this->image->name)];
 //
 //    }
-        public function getDoctor($id){
-            $doctor = Doctor::with('department')->select('name','department_id')->where('department_id',$id)->get();
-            return $this->returnData('Name',$doctor,'success get','201');
-        }
-
-
-}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,11 +15,11 @@ class Destination extends Model
     ];
 
     public function user(){
-        return $this->belongsTo('App\User','user_id');
+        return $this->belongsTo('App\Models\User','user_id');
     }
 
     public function area()
     {
-        return $this->hasMany('App\Area','destination_id');
+        return $this->hasMany('App\Models\Area','destination_id');
     }
 }

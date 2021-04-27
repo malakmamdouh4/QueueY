@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,8 +62,12 @@ class User extends Authenticatable implements JWTSubject
 
 
     public function destination(){
-        return $this->hasMany('App\Destination','user_id');
+        return $this->hasMany('App\Models\Destination','user_id');
     }
 
+    public function meeting()
+    {
+        return $this->belongsTo('App\Models\Meeting','user_id');
+    }
 
 }

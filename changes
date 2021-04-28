@@ -1,10 +1,14 @@
 
-- add models in folder 'Models' & update paths in models & config\auth.php file
+- add models in folder 'Models' & update paths in models & config\auth.php file ( done )
 
-- retrieve 'active = 0/1' in getDate method
+- retrieve 'active = 0/1' in getDate method ( done )
 
-- add column 'date' to model 'lab' & change method 'getDate' to retrieve 'day' & 'date' for a specific 'lab_id'
+- add column 'date' to model 'lab' & change method 'getDate' to retrieve 'day' & 'date' for a specific 'lab_id' ( done )
 
-- upload image profile by using 'upload' function in 'userController' controller
+- upload image profile by using 'upload' function in 'userController' controller ( done )
 
-- search for get all dates in 'lab' service ?? 
+- search for getting all dates in 'lab' service ?? function 'getDate'
+
+- search for confirming/sending appointment meeting ?? meeting screenshot
+
+- search for retrieve image instead of name of area ?? area screenshot

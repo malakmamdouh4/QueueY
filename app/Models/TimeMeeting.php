@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TimeMeeting extends Model
 {
     protected $table='time_meetings';
-    protected $fillable =['time','day_meeting_id','created_at' ,'updated_at'];
+    protected $fillable =['time','active','day_meeting_id','created_at' ,'updated_at'];
     protected $hidden =['day'];
 
     public function day()

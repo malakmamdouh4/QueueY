@@ -8,7 +8,7 @@ class Lab extends Model
 {
     protected $table ='labs';
     protected $fillable = [
-      'day' , 'created_at' , 'updated_at'
+      'date','day' , 'created_at' , 'updated_at'
     ];
     protected $hidden =['created_at' ,'updated_at','id'];
 

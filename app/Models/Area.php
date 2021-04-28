@@ -8,7 +8,7 @@ class Area extends Model
 {
 
     protected $fillable = [
-        'name' , 'destination_id' ,'user_id' , 'created_at' ,'updated_at'
+        'image' , 'destination_id' ,'user_id' , 'created_at' ,'updated_at'
     ];
 
     protected $hidden = [

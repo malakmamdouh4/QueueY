@@ -15,7 +15,7 @@ class CreateTimeLabsTable extends Migration
     {
         Schema::create('time_labs', function (Blueprint $table) {
             $table->id();
-            $table->string('value');
+            $table->string('time');
             $table->unsignedInteger('active')->default(0)->nullable();
             $table->unsignedBigInteger('lab_id')->nullable();
             $table->foreign('lab_id')->references('id')->on('labs');

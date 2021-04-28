@@ -74,6 +74,22 @@ class userController extends Controller
     }
 
 
+    public function upload(Request $request)
+    {
+        $avatar = $request->file('avatar');
+        if($request->hasFile('avatar'))
+        {
+            $new_name = rand() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->move(public_path('/uploads/images'),$new_name);
+            return response()->json($new_name);
+        }
+        else
+        {
+            return response()->json('invalid');
+        }
+    }
+
+
     public function editName(Request $request,$id)
     {
         $user = User::find($id);

@@ -15,7 +15,8 @@ class CreateLabsTable extends Migration
     {
         Schema::create('labs', function (Blueprint $table) {
             $table->id();
-            $table->string('day');
+            $table->string('date');
+            $table->string('day')->nullable();
             $table->timestamps();
         });
     }

@@ -6,8 +6,7 @@ use App\Models\Area;
 use App\Models\Destination;
 use App\Models\Service;
 use App\Traits\GeneralTrait;
-use App\Models\User;
-use Illuminate\Http\Request;
+
 
 class ShowController extends Controller
 {
@@ -35,7 +34,7 @@ class ShowController extends Controller
     // to get all areas that belong to a specific destination by using destination_id
     public function getArea($id)
     {
-        $area = Area::with('destination')->select('name')->where('destination_id',$id)->get();
+        $area = Area::with('destination')->select('image')->where('destination_id',$id)->get();
         return $this->returnData('Name',$area,'success get','201');
     }
 

@@ -16,6 +16,7 @@ class CreateTimeMeetingsTable extends Migration
         Schema::create('time_meetings', function (Blueprint $table) {
             $table->id();
             $table->string('time');
+            $table->string('active')->default(0)->nullable();
             $table->unsignedBigInteger('day_meeting_id');
             $table->foreign('day_meeting_id')->references('id')->on('day_meetings');
             $table->timestamps();

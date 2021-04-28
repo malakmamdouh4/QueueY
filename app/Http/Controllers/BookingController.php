@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Area;
 use App\Models\DayMeeting;
 use App\Models\Department;
 use App\Models\Doctor;
@@ -11,7 +10,7 @@ use App\Models\Meeting;
 use App\Models\TimeLab;
 use App\Models\TimeMeeting;
 use App\Traits\GeneralTrait;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,8 +23,12 @@ class BookingController extends Controller
      // to get all appointments ( booked or not ) in lab service
      public function getDate()
      {
-         $timelab = TimeLab::with('lab')->select('value', 'active','lab_id')->get();
-         return $this->returnData('Day',$timelab,'success','201');
+             $lab = Lab::find(3);
+             $yourDate =$lab->date;
+             $lab->day = Carbon::parse($yourDate)->format('l');
+             $lab->save();
+         $timelab = TimeLab::with('lab')->select('time', 'active','lab_id')->get();
+         return $this->returnData('Appointment',$timelab,'success','201');
      }
 
 
@@ -65,11 +68,19 @@ class BookingController extends Controller
 
 
     // to get all times that belongs to a specific day
-    public function getTimeMeetings($id)
+    public function getTimeMeetings($id,Request $request)
     {
-        $times = TimeMeeting::with('day')->select('time')
-            ->where('day_meeting_id',$id)->get();
-        return $this->returnData('Time',$times,'There are times belong to this day','201');
+        $dayMeeting = DayMeeting::find($id);
+        if( $dayMeeting->active == 0 )
+        {
+            $times = TimeMeeting::with('day')->select('time')
+                ->where('day_meeting_id',$id)->where('active',$request->query('active',0))->get();
+            return $this->returnData('Time',$times,'There are times belong to this day','201');
+        }
+        else
+        {
+            return $this->returnError('404','this day is booked');
+        }
     }
 
 
@@ -92,6 +103,22 @@ class BookingController extends Controller
 
 
 
+
+
+
+
+
+
+
+
+
+//    public function retrieveDay($id)
+//    {
+//        $lab = Lab::find($id) ;
+//        $yourDate = $lab->day;
+//        $day = Carbon::parse($yourDate)->format('l');
+//        return $this->returnData('Day',$day,'success','201');
+//    }
 
 
 

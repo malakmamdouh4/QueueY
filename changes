@@ -1,0 +1,10 @@
+
+- add models in folder 'Models' & update paths in models & config\auth.php file
+
+- retrieve 'active = 0/1' in getDate method
+
+- add column 'date' to model 'lab' & change method 'getDate' to retrieve 'day' & 'date' for a specific 'lab_id'
+
+- upload image profile by using 'upload' function in 'userController' controller
+
+- search for get all dates in 'lab' service ?? 

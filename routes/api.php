@@ -42,6 +42,9 @@ Route::get('getDestination/{id}','ShowController@getDestination');
   // to get all areas that belong to a specific destination by using destination_id
 Route::get('getArea/{id}','ShowController@getArea');
 
+
+Route::post('uploadAreaImage/{id}','ShowController@uploadAreaImage');
+
   // to get all services that belong to a specific area by using area_id
 Route::get('getService/{id}','ShowController@getService');
 
@@ -57,6 +60,9 @@ Route::get('getDepartment','BookingController@getDepartment');
   // to get all doctors that belong to a specific department by using department_id
 Route::get('getDoctor/{id}','BookingController@getDoctor');
 
+  // to retrieve day instead of date
+Route::get('retrieveDay/{id}','BookingController@retrieveDay');
+
   // to get all available days
 Route::get('getDayMeetings','BookingController@getDayMeetings');
 
@@ -68,24 +74,6 @@ Route::post('bookMeeting','BookingController@bookMeeting');
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//  // to retrieve day instead of date
-//Route::get('retrieveDay/{id}','BookingController@retrieveDay');
 
 
 //Route::get('image/{filename}','BookingController@image');

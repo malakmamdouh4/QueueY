@@ -21,13 +21,14 @@ class BookingController extends Controller
 
 
      // to get all appointments ( booked or not ) in lab service
-     public function getDate()
+     public function getDate(Request $request)
      {
-             $lab = Lab::find(3);
+             $lab = Lab::find(1);
              $yourDate =$lab->date;
              $lab->day = Carbon::parse($yourDate)->format('l');
              $lab->save();
-         $timelab = TimeLab::with('lab')->select('time', 'active','lab_id')->get();
+             $timelab = TimeLab::with('lab')->select('time', 'active','lab_id')
+             ->where('active',$request->query('active',0))->get();
          return $this->returnData('Appointment',$timelab,'success','201');
      }
 
@@ -36,9 +37,16 @@ class BookingController extends Controller
     public function updateStatus($id)
     {
         $date = TimeLab::find($id);
-        $date->active = "1";
-        $date->save();
-        return $this->returnSuccessMessage('Lab is booked successfully','201');
+        if ( $date->active == 0 )
+        {
+            $date->active = 1 ;
+            $date->save();
+            return $this->returnSuccessMessage('Lab is booked successfully','201');
+        }
+        else
+        {
+             return $this->returnError('404','This appointment already booked');
+        }
     }
 
 
@@ -57,6 +65,17 @@ class BookingController extends Controller
              ->where('department_id',$id)->get();
          return $this->returnData('Name',$doctor,'success get','201');
     }
+
+
+    // to retrieve day instead of date
+    public function retrieveDay($id)
+    {
+        $lab = Lab::find($id) ;
+        $yourDate = $lab->day;
+        $day = Carbon::parse($yourDate)->format('l');
+        return $this->returnData('Day',$day,'success','201');
+    }
+
 
 
     // to get all available days
@@ -87,38 +106,35 @@ class BookingController extends Controller
     // to book meeting
     public function bookMeeting(Request $request)
     {
-        $meeting = Meeting::create([
-            'name' => $request->input('name'),
-            'idNumber' => $request->input('Id_Number'),
-            'topic' => $request->input('topic'),
-            'day_meeting_id' => $request->input('Booking_Day'),
-            'time_meeting_id' => $request->input('Slot_Time'),
-        ]);
+        $dayMeeting = DayMeeting::find($request->input('Booking_Day'));
+        $timeMeeting = TimeMeeting::find($request->input('Slot_Time'));
+        if( $dayMeeting->active == 0 && $timeMeeting->active == 0 )
+        {
+            Meeting::create([
+                'name' => $request->input('name'),
+                'idNumber' => $request->input('Id_Number'),
+                'topic' => $request->input('topic'),
+                'day_meeting_id' => $request->input('Booking_Day'),
+                'time_meeting_id' => $request->input('Slot_Time'),
+//            'user_id' => Auth()->user()->id ,
+            ]);
+
+            $timeMeeting->active = 1 ;
+            $timeMeeting->save();
+
+            return $this->returnSuccessMessage('Booking Meeting done successfully :) ','201');
+        }
+        else
+        {
+            return $this->returnError('404','un available time');
+        }
     }
+
+
 
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public function retrieveDay($id)
-//    {
-//        $lab = Lab::find($id) ;
-//        $yourDate = $lab->day;
-//        $day = Carbon::parse($yourDate)->format('l');
-//        return $this->returnData('Day',$day,'success','201');
-//    }
 
 
 

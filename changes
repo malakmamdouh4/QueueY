@@ -1,14 +1,15 @@
 
-- add models in folder 'Models' & update paths in models & config\auth.php file ( done )
 
-- retrieve 'active = 0/1' in getDate method ( done )
+- upload image profile by using 'upload' function in 'userController' controller ( need to update as url ) ( done )
 
-- add column 'date' to model 'lab' & change method 'getDate' to retrieve 'day' & 'date' for a specific 'lab_id' ( done )
+-?? search for getting all dates in 'lab' service ?? function 'getDate'
 
-- upload image profile by using 'upload' function in 'userController' controller ( done )
+-?? search for confirming/sending appointment meeting ?? meeting screenshot  ( done )
 
-- search for getting all dates in 'lab' service ?? function 'getDate'
+-?? search for retrieve image instead of name of area ?? area screenshot  ( done )
 
-- search for confirming/sending appointment meeting ?? meeting screenshot
+-?? insert appointments by carbon
 
-- search for retrieve image instead of name of area ?? area screenshot
+-?? change status of meeting service from 0 to 1 when booking ( day & time )  ( done )
+
+- updateStatus of lab service

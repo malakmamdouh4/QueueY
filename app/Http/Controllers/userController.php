@@ -73,19 +73,22 @@ class userController extends Controller
         }
     }
 
-
+     ////// need to update //////////
     public function upload(Request $request)
     {
         $avatar = $request->file('avatar');
         if($request->hasFile('avatar'))
         {
             $new_name = rand() . '.' . $avatar->getClientOriginalExtension();
-            $avatar->move(public_path('/uploads/images'),$new_name);
-            return response()->json($new_name);
+            $image = $avatar->move(public_path('/uploads/images'),$new_name);
+            $user = new User();
+//            $user->avatar => $image ;
+            $user->save();
+
         }
         else
         {
-            return response()->json('invalid');
+            $this->returnError('404','invalid');
         }
     }
 

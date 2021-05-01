@@ -15,6 +15,8 @@ class Area extends Model
         'destination'  //  hidden to get method 'ShowController@getArea'
     ];
 
+
+
     public function destination()
     {
         return $this->belongsTo('App\Models\Destination','destination_id');

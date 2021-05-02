@@ -70,4 +70,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo('App\Models\Meeting','user_id');
     }
 
+
+    public function affair()
+    {
+        return $this->belongsTo('App\Models\Affair','user_id');
+    }
 }

@@ -42,7 +42,7 @@ Route::get('getDestination/{id}','ShowController@getDestination');
   // to get all areas that belong to a specific destination by using destination_id
 Route::get('getArea/{id}','ShowController@getArea');
 
-
+  // to upload images for every area by using area_id
 Route::post('uploadAreaImage/{id}','ShowController@uploadAreaImage');
 
   // to get all services that belong to a specific area by using area_id
@@ -71,6 +71,10 @@ Route::get('getTimeMeetings/{id}','BookingController@getTimeMeetings');
 
   // to book meeting
 Route::post('bookMeeting','BookingController@bookMeeting');
+
+  // to contact with affair / send problem
+Route::post('getAffair','BookingController@getAffair');
+
 
 
 

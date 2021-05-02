@@ -27,5 +27,10 @@ class Area extends Model
         return $this->hasMany('App\Models\Service','area_id');
     }
 
+    public function affair()
+    {
+        return $this->belongsTo('App\Models\Affair','area_id');
+    }
+
 
 }

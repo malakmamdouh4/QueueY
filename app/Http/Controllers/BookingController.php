@@ -7,6 +7,9 @@ use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Lab;
 use App\Models\Meeting;
+use App\Models\Option;
+use App\Models\Problem;
+use App\Models\Rate;
 use App\Models\TimeLab;
 use App\Models\TimeMeeting;
 use App\Models\Affair;
@@ -110,24 +113,20 @@ class BookingController extends Controller
         $time = $timeMeeting->id;
         $active = TimeMeeting::pluck('active')->toArray();
 
-        if ($active != 0)
-        {
+        if ($active != 0) {
             $dayMeeting->active = 1;
             $dayMeeting->save();
             return $this->returnError('404', 'un available time');
-        } else
-        {
-            for ($time = 4; $timeMeeting->active == 0; $time++)
-            {
-                if ($dayMeeting->active == 0 && $timeMeeting->active == 0)
-                {
+        } else {
+            for ($time = 4; $timeMeeting->active == 0; $time++) {
+                if ($dayMeeting->active == 0 && $timeMeeting->active == 0) {
                     Meeting::create([
                         'name' => $request->input('name'),
                         'idNumber' => $request->input('Id_Number'),
                         'topic' => $request->input('topic'),
                         'day_meeting_id' => $request->input('Booking_Day'),
                         'time_meeting_id' => $request->input('Slot_Time'),
-                    //  'user_id' => Auth()->user()->id ,
+                        //  'user_id' => Auth()->user()->id ,
                     ]);
                     $timeMeeting->active = 1;
                     $timeMeeting->save();
@@ -168,6 +167,86 @@ class BookingController extends Controller
 
     }
 
+    public function uploadImageOption(Request $request,$id)
+    {
+        $option = Option::find($id);
+        if ($request->hasFile('image'))
+        {
+            $imageExt = $request->file('image')->getClientOriginalExtension();
+            $imageName = time() . '.' . $imageExt;
+            $request->file('image')->storeAs('/public', $imageName);
+            $option->image = URL::to('/') . '/storage/' . $imageName;
+            $option->save();
+            return $this->returnData('image_url',$option->image,'image saved successfully','201');
+        }
+    }
+
+
+  public function getOption()
+  {
+      $options = Option::select('name','image')->get();
+      return $this->returnData('Option', $options, 'There are all options here', '201');
+  }
+
+  public function sendProblem(Request $request)
+  {
+      if ($request->hasFile('image'))
+      {
+          $imageExt = $request->file('image')->getClientOriginalExtension();
+          $imageName = time() . '.' . $imageExt;
+          $request->file('image')->storeAs('/public', $imageName);
+
+
+          $problem = Problem::create([
+              'comment' => $request->input('comment'),
+              'image' => URL::to('/') . '/storage/' . $imageName,
+          ]);
+
+          $problem->save();
+
+          return $this->returnSuccessMessage('image saved successfully','201');
+      }
+
+  }
+
+
+  public function sendRate(Request $request)
+  {
+       Rate::create([
+           'value' => $request->input('value'),
+           'opinion' => $request->input('opinion')
+       ]);
+
+      return $this->returnSuccessMessage('Rate send successfully','201');
+  }
+
+
+  public function getNotification(Request $request)
+  {
+      $timelab = TimeLab::with('lab','service')->select('time','lab_id','service_id')
+          ->where('active', $request->query('active', 1))->get();
+//      return $this->returnData('Appointment', $timelab, 'success', '201');
+
+      $timemeeting = TimeMeeting::where('active', $request->query('active', 1));
+      if($timemeeting)
+      {
+          $meeting = Meeting::with('day','time')->select('day_meeting_id','time_meeting_id')->get();
+      }
+      return response()->json($timelab , $meeting);
+  }
+
+  public function deleteNotification($id)
+  {
+      $notification = TimeLab::find($id);
+      if($notification)
+      {
+          $notification->active = 0 ;
+          $notification->save();
+
+          return $this->returnSuccessMessage('201','This time is active now');
+      }
+
+  }
 
 
 }

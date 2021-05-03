@@ -75,4 +75,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo('App\Models\Affair','user_id');
     }
+
+
+    public function problem()
+    {
+        return $this->belongsTo('App\Models\Problem','user_id');
+    }
+
+    public function rate()
+    {
+        return $this->belongsTo('App\Models\Rate','user_id');
+    }
 }

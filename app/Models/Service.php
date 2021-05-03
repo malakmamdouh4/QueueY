@@ -11,12 +11,17 @@ class Service extends Model
         ];
 
     protected $hidden = [
-        'area' //  hidden to get method 'ShowController@getService'
+        'area' , 'id' ,'area_id' , 'user_id' , 'created_at' ,'updated_at'//  hidden to get method 'ShowController@getService'
     ];
 
 
     public function area()
     {
         return $this->belongsTo('App\Models\Area','area_id');
+    }
+
+    public function time()
+    {
+        return $this->hasMany('App\Models\TimeLab','service_id');
     }
 }

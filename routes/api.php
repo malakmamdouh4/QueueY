@@ -24,7 +24,7 @@ Route::group(['prefix'=>'user','middleware'=>'api'],function ()
     Route::post('/register','userController@register');                    // to sign up as a user
     Route::post('/login','userController@login');;                         // to login as a user
     Route::get('/profile/{id}','userController@userProfile');              // to get into user profile
-    Route::post('upload','userController@upload');                         // upload image profile
+    Route::post('upload/{id}','userController@upload');                         // upload image profile
     Route::put('/editName/{id}','userController@editName');                // to edit user name
     Route::get('/showPassword/{id}','userController@showPassword');        // to get old password
     Route::put('/editPassword/{id}','userController@editPassword');        // to update new password
@@ -51,6 +51,12 @@ Route::get('getService/{id}','ShowController@getService');
   // to get all appointments ( booked or not ) in lab service
 Route::put('getDate','BookingController@getDate');
 
+  // to get all notification for lab service
+Route::get('getNotification','BookingController@getNotification');
+
+ // to delete appointment in lab service
+Route::post('deleteNotification/{id}','BookingController@deleteNotification');
+
   // to book specific appointment by using id
 Route::put('updateStatus/{id}','BookingController@updateStatus');
 
@@ -74,6 +80,19 @@ Route::post('bookMeeting','BookingController@bookMeeting');
 
   // to contact with affair / send problem
 Route::post('getAffair','BookingController@getAffair');
+
+  // to upload image of option
+Route::post('uploadImageOption/{id}','BookingController@uploadImageOption');
+
+  // to get all options
+Route::get('getOption','BookingController@getOption');
+
+  // to send a problem
+Route::post('sendProblem','BookingController@sendProblem');
+
+  // te send rate
+Route::post('sendRate','BookingController@sendRate');
+
 
 
 

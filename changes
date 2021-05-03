@@ -1,15 +1,9 @@
 
 
-- upload image profile by using 'upload' function in 'userController' controller ( need to update as url ) ( done )
-
 -?? search for getting all dates in 'lab' service ?? function 'getDate'
-
--?? search for confirming/sending appointment meeting ?? meeting screenshot  ( done )
-
--?? search for retrieve image instead of name of area ?? area screenshot  ( done )
 
 -?? insert appointments by carbon
 
--?? change status of meeting service from 0 to 1 when booking ( day & time )  ( done )
-
 - updateStatus of lab service
+
+-?? search for active == 0 in all days in service meeting

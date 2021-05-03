@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Validator;
 
 
@@ -74,22 +75,26 @@ class userController extends Controller
     }
 
      ////// need to update //////////
-    public function upload(Request $request)
+    public function upload(Request $request,$id)
     {
-        $avatar = $request->file('avatar');
-        if($request->hasFile('avatar'))
+        $user = User::find($id);
+
+        if ($user)
         {
-            $new_name = rand() . '.' . $avatar->getClientOriginalExtension();
-            $image = $avatar->move(public_path('/uploads/images'),$new_name);
-            $user = new User();
-//            $user->avatar => $image ;
+            $imageExt = $request->file('avatar')->getClientOriginalExtension();
+            $imageName = time() . '.' . $imageExt;
+            $request->file('avatar')->storeAs('/public', $imageName);
+
+            $user->avatar = URL::to('/') . '/storage/' . $imageName ;
             $user->save();
 
+            return $this->returnData('Image',$user->avatar,'image saved successfully','201');
         }
         else
         {
-            $this->returnError('404','invalid');
+            return $this->returnError('404','error inavlid');
         }
+
     }
 
 

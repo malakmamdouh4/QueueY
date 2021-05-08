@@ -1,9 +1,12 @@
 
 
--?? search for getting all dates in 'lab' service ?? function 'getDate'
+-?? search for converting all dates to days in 'lab' service ( find all ) in function 'getDate'
 
 -?? insert appointments by carbon
 
-- updateStatus of lab service
-
 -?? search for active == 0 in all days in service meeting
+
+
+sanctum
+public\htdocs
+

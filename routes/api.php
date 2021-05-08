@@ -23,11 +23,11 @@ Route::group(['prefix'=>'user','middleware'=>'api'],function ()
 {
     Route::post('/register','userController@register');                    // to sign up as a user
     Route::post('/login','userController@login');;                         // to login as a user
-    Route::get('/profile/{id}','userController@userProfile');              // to get into user profile
-    Route::post('upload/{id}','userController@upload');                         // upload image profile
-    Route::put('/editName/{id}','userController@editName');                // to edit user name
-    Route::get('/showPassword/{id}','userController@showPassword');        // to get old password
-    Route::put('/editPassword/{id}','userController@editPassword');        // to update new password
+    Route::get('/profile','userController@userProfile');                   // to get into user profile
+    Route::post('upload','userController@upload');                         // upload image profile
+    Route::put('/editName','userController@editName');                     // to edit user name
+    Route::get('/showPassword','userController@showPassword');             // to get old password
+    Route::put('/editPassword','userController@editPassword');             // to update new password
     Route::post('/logout','userController@logout');                        // to logout
 
 });
@@ -50,6 +50,8 @@ Route::get('getService/{id}','ShowController@getService');
 
   // to get all appointments ( booked or not ) in lab service
 Route::put('getDate','BookingController@getDate');
+
+Route::post('insertDates','BookingController@insertDates');
 
   // to get all notification for lab service
 Route::get('getNotification','BookingController@getNotification');

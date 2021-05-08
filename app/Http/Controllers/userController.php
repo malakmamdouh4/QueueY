@@ -25,6 +25,7 @@ class userController extends Controller
                 'password' => bcrypt($request->input('password')),
                 'title' => $request->input('title') ,
                 'busName' => $request->input('busName') ,
+                'role' => $request->input('role') ,
                 'busCategory' => $request->input('busCategory') ,
                 'busPhone' => $request->input('busPhone') ,
                 'busEmail' => $request->input('busEmail') ,
@@ -51,33 +52,34 @@ class userController extends Controller
         }
 
         return $this->createNewToken($token);
+
+//         $user = auth()->user() ;
+//         $token = $user->createToken('token');
+//         return $token->plainTextToken;
     }
 
 
     protected function createNewToken($token)
     {
-        return $this->returnData('token',$token,'User logged successfully','201');
+        return response()->json([
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => auth()->user()
+        ]);
     }
 
 
-    public function userProfile($id)
+    public function userProfile()
     {
-        $user = User::find($id);
-        if($user)
-        {
-            return $this->returnData('userProfile',[$user->avatar,$user->fullName,$user->phone ,$user->email],
-                'User logged successfully','201');
-        }
-        else
-        {
-            return $this->returnError('404','invalid id');
-        }
+        $profile = [auth()->user()->avatar,auth()->user()->fullName,auth()->user()->phone];
+        return $this->returnData('user',$profile,'Welcome in your account','201');
     }
 
-     ////// need to update //////////
-    public function upload(Request $request,$id)
+     // to upload image for user profile //
+    public function upload(Request $request)
     {
-        $user = User::find($id);
+        $user = User::find(auth()->user()->id);
 
         if ($user)
         {
@@ -92,15 +94,15 @@ class userController extends Controller
         }
         else
         {
-            return $this->returnError('404','error inavlid');
+            return $this->returnError('404','error invalid');
         }
 
     }
 
 
-    public function editName(Request $request,$id)
+    public function editName(Request $request)
     {
-        $user = User::find($id);
+        $user = User::find(auth()->user()->id);
         if($user)
         {
             $user->fullName = $request->input('fullName');
@@ -114,9 +116,9 @@ class userController extends Controller
     }
 
 
-    public function showPassword($id)
+    public function showPassword()
     {
-        $user = User::find($id);
+        $user = User::find(auth()->user()->id);
         if($user)
         {
             return $this->returnData('oldPassword',$user->password,
@@ -129,20 +131,24 @@ class userController extends Controller
     }
 
 
-    public function editPassword(Request $request,$id)
+    public function editPassword(Request $request)
     {
-        $user = User::find($id);
+        $this->validate($request, [
+            'old_password'     => 'required',
+            'new_password'     => 'required'
+        ]);
+        $data = $request->all();
 
-        if ($user) {
-
-            $user->password = bcrypt($request->input('password'));
-            $user->save();
-
-            return $this->returnSuccessMessage('password is changed ', '201');
+        $user = User::find(auth()->user()->id);
+        if(!Hash::check($data['old_password'], $user->password)){
+            return back()
+                ->with('error','The specified password does not match the database password');
         }
         else
         {
-            return $this->returnError('404', 'invalid id');
+            $user->password = bcrypt($request->input('new_password'));
+            $user->save();
+            return $this->returnSuccessMessage('password updated successfully','201');
         }
     }
 

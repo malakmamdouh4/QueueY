@@ -27,6 +27,17 @@ class BookingController extends Controller
 
     use GeneralTrait;
 
+    public function insertDates()
+    {
+
+        for($current = 1 ; $current <= 7 ; $current++ )
+        {
+            $current = Carbon::now();
+            $trialExpires = $current->addDays(1);
+            return response()->json($trialExpires);
+        }
+
+    }
 
     // to get all appointments ( booked or not ) in lab service
     public function getDate(Request $request)

@@ -32,7 +32,7 @@ class userController extends Controller
                 'busWebsite' => $request->input('busWebsite') ,
         ]);
 
-        return $this->returnData('user',$user,'User successfully registered','201');
+        return $this->returnData('user',$user,'User registered successfully','201');
     }
 
 
@@ -53,26 +53,18 @@ class userController extends Controller
 
         return $this->createNewToken($token);
 
-//         $user = auth()->user() ;
-//         $token = $user->createToken('token');
-//         return $token->plainTextToken;
     }
 
 
     protected function createNewToken($token)
     {
-        return response()->json([
-            'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
-        ]);
+        return $this->returnData('token',$token,'You logged successfully','201');
     }
 
 
     public function userProfile()
     {
-        $profile = [auth()->user()->avatar,auth()->user()->fullName,auth()->user()->phone];
+        $profile = [auth()->user()->avatar,auth()->user()->fullName,auth()->user()->phone,auth()->user()->email];
         return $this->returnData('user',$profile,'Welcome in your account','201');
     }
 
@@ -90,7 +82,7 @@ class userController extends Controller
             $user->avatar = URL::to('/') . '/storage/' . $imageName ;
             $user->save();
 
-            return $this->returnData('Image',$user->avatar,'image saved successfully','201');
+            return $this->returnData('Image',$user->avatar,'image changed successfully','201');
         }
         else
         {
@@ -107,7 +99,7 @@ class userController extends Controller
         {
             $user->fullName = $request->input('fullName');
             $user->save();
-            return $this->returnSuccessMessage('name is changed well','201');
+            return $this->returnSuccessMessage('well, name is changed','201');
         }
         else
         {

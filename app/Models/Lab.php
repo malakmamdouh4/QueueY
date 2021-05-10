@@ -10,7 +10,7 @@ class Lab extends Model
     protected $fillable = [
       'date','day' , 'created_at' , 'updated_at'
     ];
-    protected $hidden =['created_at' ,'updated_at','id'];
+    protected $hidden =['created_at' ,'updated_at','day'];
 
     public function timeLab(){
         return $this->hasMany('App\Models\TimeLab','lab_id');

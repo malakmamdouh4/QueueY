@@ -42,7 +42,7 @@ class BookingController extends Controller
 
 
     // to get all appointments ( booked or not ) in lab service
-    public function getDate(Request $request)
+    public function getDate(Request $request) //dashboard
     {
      //   $lab = Lab::all();
 //        $labs =DB::table('labs')->pluck('date');
@@ -51,16 +51,16 @@ class BookingController extends Controller
 //            $labs->day = Carbon::parse($yourDate)->format('l');
 //            $lab->save();
 //        }
-        $timelab = TimeLab::with('lab')->select('time', 'active', 'lab_id')
+        $timelab = TimeLab::with('lab')->select('time', 'active','id', 'lab_id')
             ->where('active', $request->query('active', 0))->get();
         return $this->returnData('Appointment', $timelab, 'success', '201');
     }
 
 
     // to book specific appointment by using appointment_id
-    public function updateStatus($id)
+    public function updateStatus(Request $request)
     {
-        $date = TimeLab::find($id);
+        $date = TimeLab::find($request->input('timelab_id'));
         if ($date->active == 0) {
             $date->active = 1;
             $date->save();
@@ -74,29 +74,60 @@ class BookingController extends Controller
     // to get all departments in area ( faculty )
     public function getDepartment()
     {
-        $depart = Department::select('name')->get();
+        $depart = Department::select('name','image','id')->get();
         return response()->json($depart);
+    }
+    public function uploadDepartmentImage(Request $request,$id)
+    {
+        if ($request->hasFile('image')){
+            $imageExt = $request->file('image')->getClientOriginalExtension();
+            $imageName = time().'.'.$imageExt;
+            $request->file('image')->storeAs('/public',$imageName);
+            $department = Department::find($id);
+            $department->image = URL::to('/') . '/storage/' . $imageName;
+            $department->save();
+            return $this->returnData('image_url',$department->image,'image saved successfully','201');
+        }
+        else
+        {
+            return $this->returnError('404','failed to save');
+        }
     }
 
 
     // to get all doctors that belong to a specific department by using department_id
-    public function getDoctor($id)
+    public function getDoctor(Request $request)
     {
-        $doctor = Doctor::with('department')->select('name', 'department_id')
-            ->where('department_id', $id)->get();
+        $doctor = Doctor::with('department')->select('name', 'image','id','department_id')
+            ->where('department_id', $request->input('department_id'))->get();
         return $this->returnData('Name', $doctor, 'success get', '201');
+    }
+    public function uploadDoctorImage(Request $request,$id)
+    {
+        if ($request->hasFile('image')){
+            $imageExt = $request->file('image')->getClientOriginalExtension();
+            $imageName = time().'.'.$imageExt;
+            $request->file('image')->storeAs('/public',$imageName);
+            $doctor = Doctor::find($id);
+            $doctor->image = URL::to('/') . '/storage/' . $imageName;
+            $doctor->save();
+            return $this->returnData('image_url',$doctor->image,'image saved successfully','201');
+        }
+        else
+        {
+            return $this->returnError('404','failed to save');
+        }
     }
 
 
     // to retrieve day instead of date
-    public function retrieveDay($id)
-    {
-        $lab = Lab::find($id);
-        $yourDate = $lab->day;
-        $day = Carbon::parse($yourDate)->format('l');
-        return $this->returnData('Day', $day, 'success', '201');
-    }
-
+//    public function retrieveDay($id)
+//    {
+//        $lab = Lab::find($id);
+//        $yourDate = $lab->day;
+//        $day = Carbon::parse($yourDate)->format('l');
+//        return $this->returnData('Day', $day, 'success', '201');
+//    }
 
     // to get all available days
     public function getDayMeetings(Request $request)
@@ -107,12 +138,12 @@ class BookingController extends Controller
 
 
     // to get all times that belongs to a specific day
-    public function getTimeMeetings($id, Request $request)
+    public function getTimeMeetings(Request $request)
     {
-        $dayMeeting = DayMeeting::find($id);
+        $dayMeeting = DayMeeting::find($request->input('dayId'));
         if ($dayMeeting->active == 0) {
-            $times = TimeMeeting::with('day')->select('time')
-                ->where('day_meeting_id', $id)->where('active', $request->query('active', 0))->get();
+            $times = TimeMeeting::with('day')->select('time','id')
+                ->where('day_meeting_id', $request->input('dayId'))->where('active', $request->query('active', 0))->get();
             return $this->returnData('Time', $times, 'There are times belong to this day', '201');
         } else {
             return $this->returnError('404', 'this day is booked');
@@ -248,19 +279,20 @@ class BookingController extends Controller
       {
           $meeting = Meeting::with('day','time')->select('day_meeting_id','time_meeting_id')->get();
       }
-      return response()->json($timelab , $meeting);
+      $data =[$timelab,$meeting];
+      return response()->json($data);
   }
 
-  public function deleteNotification($id)
+  public function deleteNotification(Request $request)
   {
-      $notification = TimeLab::find($id);
+      $notification = TimeLab::find($request->input('labId'));
       if($notification)
       {
           $notification->active = 0 ;
           $notification->save();
-
           return $this->returnSuccessMessage('201','This time is active now');
       }
+
 
   }
 

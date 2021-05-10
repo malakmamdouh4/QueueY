@@ -59,25 +59,28 @@ Route::post('insertDates','BookingController@insertDates');
 Route::get('getNotification','BookingController@getNotification');
 
  // to delete appointment in lab service
-Route::post('deleteNotification/{id}','BookingController@deleteNotification');
+Route::post('deleteNotification','BookingController@deleteNotification');
 
   // to book specific appointment by using id
-Route::put('updateStatus/{id}','BookingController@updateStatus');
+Route::put('updateStatus','BookingController@updateStatus');
 
   // to get all departments in area
 Route::get('getDepartment','BookingController@getDepartment');
 
+Route::post('uploadDepartmentImage/{id}','BookingController@uploadDepartmentImage');
+
   // to get all doctors that belong to a specific department by using department_id
-Route::get('getDoctor/{id}','BookingController@getDoctor');
+Route::get('getDoctor','BookingController@getDoctor');
+Route::post('uploadDoctorImage/{id}','BookingController@uploadDoctorImage');
 
   // to retrieve day instead of date
-Route::get('retrieveDay/{id}','BookingController@retrieveDay');
+//Route::get('retrieveDay/{id}','BookingController@retrieveDay');
 
   // to get all available days
 Route::get('getDayMeetings','BookingController@getDayMeetings');
 
   // to get all times that belongs to a specific day
-Route::get('getTimeMeetings/{id}','BookingController@getTimeMeetings');
+Route::get('getTimeMeetings','BookingController@getTimeMeetings');
 
   // to book meeting
 Route::post('bookMeeting','BookingController@bookMeeting');

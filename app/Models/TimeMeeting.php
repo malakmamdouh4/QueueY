@@ -8,7 +8,7 @@ class TimeMeeting extends Model
 {
     protected $table='time_meetings';
     protected $fillable =['time','active','day_meeting_id','created_at' ,'updated_at'];
-    protected $hidden =['day'];
+    protected $hidden =['day','created_at' ,'updated_at'];
 
     public function day()
     {
@@ -17,7 +17,7 @@ class TimeMeeting extends Model
 
     public function meeting()
     {
-        return $this->belongsTo('App\Models\Meeting','time_meeting_id');
+        return $this->hasMany('App\Models\Meeting','time_meeting_id');
     }
 
 }

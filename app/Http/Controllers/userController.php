@@ -58,7 +58,8 @@ class userController extends Controller
 
     protected function createNewToken($token)
     {
-        return $this->returnData('token',$token,'You logged successfully','201');
+        $id =auth()->user()->id;
+        return $this->returntoken('token',$token,'id',$id,'You logged successfully','201');
     }
 
 

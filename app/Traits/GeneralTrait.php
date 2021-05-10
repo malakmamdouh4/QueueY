@@ -36,6 +36,17 @@ trait GeneralTrait
             $key => $value
         ]);
     }
+    public function returntoken($token,$value,$id,$valueId,$msg,$errNum)
+    {
+        return response()->json([
+            'status' => true ,
+            'errNum' => $errNum ,
+            'msg' => $msg ,
+            $token => $value,
+            $id =>$valueId
+        ]);
+    }
+
 
     public function returnCodeAccordingToInput($validator)
     {

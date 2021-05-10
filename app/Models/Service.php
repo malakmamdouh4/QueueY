@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     protected $fillable = [
-        'name' , 'area_id' ,'user_id' , 'created_at' ,'updated_at'
+        'name' , 'image','area_id' ,'user_id' , 'created_at' ,'updated_at'
         ];
 
     protected $hidden = [
-        'area' , 'id' ,'area_id' , 'user_id' , 'created_at' ,'updated_at'//  hidden to get method 'ShowController@getService'
+        'area'  ,'area_id' , 'user_id' , 'created_at' ,'updated_at'//  hidden to get method 'ShowController@getService'
     ];
 
 

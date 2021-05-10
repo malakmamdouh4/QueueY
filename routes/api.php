@@ -40,13 +40,15 @@ Route::get('getAllDestination','ShowController@getAllDestination');
 Route::get('getDestination/{id}','ShowController@getDestination');
 
   // to get all areas that belong to a specific destination by using destination_id
-Route::get('getArea/{id}','ShowController@getArea');
+Route::get('getArea','ShowController@getArea');
 
   // to upload images for every area by using area_id
 Route::post('uploadAreaImage/{id}','ShowController@uploadAreaImage');
+Route::post('uploadDestinationImage/{id}','ShowController@uploadDestinationImage');
 
   // to get all services that belong to a specific area by using area_id
-Route::get('getService/{id}','ShowController@getService');
+Route::get('getService','ShowController@getService');
+Route::post('uploadServicesImage/{id}','ShowController@uploadServicesImage');
 
   // to get all appointments ( booked or not ) in lab service
 Route::put('getDate','BookingController@getDate');

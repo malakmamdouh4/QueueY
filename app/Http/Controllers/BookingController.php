@@ -16,6 +16,7 @@ use App\Models\Affair;
 use App\Traits\GeneralTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
@@ -26,26 +27,30 @@ class BookingController extends Controller
 {
 
     use GeneralTrait;
+// هتتعمل فى الداش بورد
+//    public function insertDates()
+//    {
+//
+//        for($current = 1 ; $current <= 7 ; $current++ )
+//        {
+//            $current = Carbon::now();
+//            $trialExpires = $current->addDays(1);
+//            return response()->json($trialExpires);
+//        }
+//
+//    }
 
-    public function insertDates()
-    {
-
-        for($current = 1 ; $current <= 7 ; $current++ )
-        {
-            $current = Carbon::now();
-            $trialExpires = $current->addDays(1);
-            return response()->json($trialExpires);
-        }
-
-    }
 
     // to get all appointments ( booked or not ) in lab service
     public function getDate(Request $request)
     {
-        $lab = Lab::find(1);
-        $yourDate = $lab->date;
-        $lab->day = Carbon::parse($yourDate)->format('l');
-        $lab->save();
+     //   $lab = Lab::all();
+//        $labs =DB::table('labs')->pluck('date');
+//        foreach ($labs as $lab) {
+//            $yourDate = $labs->date;
+//            $labs->day = Carbon::parse($yourDate)->format('l');
+//            $lab->save();
+//        }
         $timelab = TimeLab::with('lab')->select('time', 'active', 'lab_id')
             ->where('active', $request->query('active', 0))->get();
         return $this->returnData('Appointment', $timelab, 'success', '201');

@@ -231,7 +231,7 @@ class BookingController extends Controller
 
   public function getOption()
   {
-      $options = Option::select('name','image')->get();
+      $options = Option::select('name','image','id')->get();
       return $this->returnData('Option', $options, 'There are all options here', '201');
   }
 
@@ -242,7 +242,6 @@ class BookingController extends Controller
           $imageExt = $request->file('image')->getClientOriginalExtension();
           $imageName = time() . '.' . $imageExt;
           $request->file('image')->storeAs('/public', $imageName);
-
 
           $problem = Problem::create([
               'comment' => $request->input('comment'),
@@ -285,6 +284,7 @@ class BookingController extends Controller
 
   public function deleteNotification(Request $request)
   {
+      $meeting = Meeting::find($request->input('meetingId'));
       $notification = TimeLab::find($request->input('labId'));
       if($notification)
       {
@@ -292,7 +292,12 @@ class BookingController extends Controller
           $notification->save();
           return $this->returnSuccessMessage('201','This time is active now');
       }
-
+      elseif($meeting){
+          $timeMeeting =TimeMeeting::find($request->input('timeMeetingId'));
+          $timeMeeting->active= 0;
+          $timeMeeting->save();
+          DB::delete('delete from meetings where id = ?',[$request->input('meetingId')]);
+      }
 
   }
 

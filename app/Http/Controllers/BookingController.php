@@ -156,18 +156,17 @@ class BookingController extends Controller
     {
         $dayMeeting = DayMeeting::find($request->input('Booking_Day'));
         $timeMeeting = TimeMeeting::find($request->input('Slot_Time'));
+         $labs=DB::table('time_meetings')->pluck('active');
 
-        $time = $timeMeeting->id;
-        $active = TimeMeeting::pluck('active')->toArray();
 
-        if ($active != 0) {
+        if (!in_array('0',[$labs])) {
             $dayMeeting->active = 1;
             $dayMeeting->save();
-            return $this->returnError('404', 'un available time');
-        } else {
-            for ($time = 4; $timeMeeting->active == 0; $time++) {
-                if ($dayMeeting->active == 0 && $timeMeeting->active == 0) {
-                    Meeting::create([
+
+            return $labs;
+
+        }else {
+            Meeting::create([
                         'name' => $request->input('name'),
                         'idNumber' => $request->input('Id_Number'),
                         'topic' => $request->input('topic'),
@@ -178,10 +177,10 @@ class BookingController extends Controller
                     $timeMeeting->active = 1;
                     $timeMeeting->save();
                     return $this->returnSuccessMessage('Booking Meeting done successfully :) ', '201');
-                }
-            }
         }
-    }
+//!$labs['active] == '0
+
+        }
 
 
     public function getAffair(request $request)

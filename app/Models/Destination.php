@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Destination extends Model
 {
     protected $fillable = [
-       'name' ,'user_id' , 'created_at' ,'updated_at'
+       'name' ,'user_id' ,'image', 'created_at' ,'updated_at'
     ];
 
     protected $hidden = [

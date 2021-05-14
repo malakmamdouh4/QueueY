@@ -101,37 +101,72 @@ class MeetingController extends Controller
 
 
     // to book meeting
+//    public function bookMeeting(Request $request)
+//    {
+//        $dayMeeting = DayMeeting::find($request->input('Booking_Day'));
+//        $timeMeeting = TimeMeeting::find($request->input('Slot_Time'));
+//
+//        $labs=DB::table('time_meetings')->pluck('active');
+//
+//        if (in_array('0',[$labs]))
+//        {
+//            $dayMeeting->active = 1;
+//            $dayMeeting->save();
+//
+//            return $labs;
+//        }
+////        elseif($timeMeeting->active == 1)
+////        {
+////            return 'this appointment already booked';
+////        }
+//        else
+//        {
+//            Meeting::create([
+//                'name' => $request->input('name'),
+//                'idNumber' => $request->input('Id_Number'),
+//                'topic' => $request->input('topic'),
+//                'day_meeting_id' => $request->input('Booking_Day'),
+//                'time_meeting_id' => $request->input('Slot_Time'),
+//                'user_id' => auth()->user()->id ,
+//                'doctor_id'=> $request->input('doctor_id')
+//            ]);
+//            $timeMeeting->active = 1;
+//            $timeMeeting->save();
+//            return $this->returnSuccessMessage('Booking Meeting done successfully :) ', '201');
+//        }
+//
+//    }
+
+
     public function bookMeeting(Request $request)
     {
         $dayMeeting = DayMeeting::find($request->input('Booking_Day'));
         $timeMeeting = TimeMeeting::find($request->input('Slot_Time'));
-
         $labs=DB::table('time_meetings')->pluck('active');
 
-        if (!in_array('0',[$labs]))
-        {
+
+        if (!in_array('0',[$labs])) {
             $dayMeeting->active = 1;
             $dayMeeting->save();
 
             return $labs;
-        }
-        else
-        {
+
+        }else {
             Meeting::create([
                 'name' => $request->input('name'),
                 'idNumber' => $request->input('Id_Number'),
                 'topic' => $request->input('topic'),
                 'day_meeting_id' => $request->input('Booking_Day'),
                 'time_meeting_id' => $request->input('Slot_Time'),
-                'user_id' => auth()->user()->id ,
+                //  'user_id' => Auth()->user()->id ,
             ]);
             $timeMeeting->active = 1;
             $timeMeeting->save();
             return $this->returnSuccessMessage('Booking Meeting done successfully :) ', '201');
         }
 
-    }
 
+    }
 
 
 }

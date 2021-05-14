@@ -14,87 +14,168 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+
+                      //////////               user                    //////////
+
+Route::group(['prefix'=>'user','middleware'=>'api'],function () {
 
 
-Route::group(['prefix'=>'user','middleware'=>'api'],function ()
-{
-    Route::post('/register','userController@register');                    // to sign up as a user
-    Route::post('/login','userController@login');;                         // to login as a user
-    Route::get('/profile','userController@userProfile');                   // to get into user profile
-    Route::post('upload','userController@upload');                         // upload image profile
-    Route::put('/editName','userController@editName');                     // to edit user name
-    Route::get('/showPassword','userController@showPassword');             // to get old password
-    Route::put('/editPassword','userController@editPassword');             // to update new password
-    Route::post('/logout','userController@logout');// to logout
-    // to get all destinations that they are in app
-    Route::get('getAllDestination','ShowController@getAllDestination');
+    // to sign up as a user or business
+    Route::post('/register', 'userController@register');
 
-    // to get destination that belongs to a specific user by using user_id
-    Route::get('getDestination/{id}','ShowController@getDestination');
 
-    // to get all areas that belong to a specific destination by using destination_id
-    Route::get('getArea','ShowController@getArea');
+    // to login as a user or register
+    Route::post('/login', 'userController@login');;
 
-    // to upload images for every area by using area_id
-    Route::post('uploadAreaImage/{id}','ShowController@uploadAreaImage');
-    Route::post('uploadDestinationImage/{id}','ShowController@uploadDestinationImage');
 
-    // to get all services that belong to a specific area by using area_id
-    Route::get('getService','ShowController@getService');
-    Route::post('uploadServicesImage/{id}','ShowController@uploadServicesImage');
+    // to get into user profile
+    Route::get('/profile', 'userController@userProfile');
 
-    // to get all appointments ( booked or not ) in lab service
-    Route::put('getDate','BookingController@getDate');
 
-    Route::post('insertDates','BookingController@insertDates');
+    // to change image profile
+    Route::post('upload', 'userController@upload');
 
-    // to get all notification for lab service
-    Route::get('getNotification','BookingController@getNotification');
 
-    // to delete appointment in lab service
-    Route::post('deleteNotification','BookingController@deleteNotification');
+    // to change user name
+    Route::put('/editName', 'userController@editName');
 
-    // to book specific appointment by using id
-    Route::put('updateStatus','BookingController@updateStatus');
 
-    // to get all departments in area
-    Route::get('getDepartment','BookingController@getDepartment');
+    // to change user password
+    Route::put('/editPassword', 'userController@editPassword');
 
-    Route::post('uploadDepartmentImage/{id}','BookingController@uploadDepartmentImage');
-
-    // to get all doctors that belong to a specific department by using department_id
-    Route::get('getDoctor','BookingController@getDoctor');
-    Route::post('uploadDoctorImage/{id}','BookingController@uploadDoctorImage');
-
-    // to retrieve day instead of date
-//Route::get('retrieveDay/{id}','BookingController@retrieveDay');
-
-    // to get all available days
-    Route::get('getDayMeetings','BookingController@getDayMeetings');
-
-    // to get all times that belongs to a specific day
-    Route::get('getTimeMeetings','BookingController@getTimeMeetings');
-
-    // to book meeting
-    Route::post('bookMeeting','BookingController@bookMeeting');
 
     // to contact with affair / send problem
-    Route::post('getAffair','BookingController@getAffair');
+    Route::post('getAffair', 'userController@getAffair');
 
-    // to upload image of option
-    Route::post('uploadImageOption/{id}','BookingController@uploadImageOption');
-
-    // to get all options
-    Route::get('getOption','BookingController@getOption');
 
     // to send a problem
-    Route::post('sendProblem','BookingController@sendProblem');
+    Route::post('sendProblem', 'userController@sendProblem');
+
 
     // te send rate
-    Route::post('sendRate','BookingController@sendRate');
+    Route::post('sendRate', 'userController@sendRate');
+
+
+    // to delete appointment/notification in any service
+    Route::post('deleteNotification', 'userController@deleteNotification');
+
+
+    // to logout from profile
+    Route::post('/logout', 'userController@logout');
+
+});
+
+
+                  //////////               business                    //////////
+
+Route::group(['prefix'=>'business','middleware'=>'api'],function () {
+
+    // to get all destinations that they are in app
+    Route::get('getAllDestination', 'BusinessController@getAllDestination');
+
+
+    // to upload images for every destination by using destination_id
+    Route::post('uploadDestImage/{id}', 'BusinessController@uploadDestImage');
+
+
+    // to get all areas that belong to a specific destination by using destination_id
+    Route::get('getArea', 'BusinessController@getArea');
+
+
+    // to upload images for every area by using area_id
+    Route::post('uploadAreaImage/{id}', 'BusinessController@uploadAreaImage');
+
+
+    // to get all services that belong to a specific area by using area_id
+    Route::get('getService', 'BusinessController@getService');
+
+
+    // to upload images for every service by using service_id
+    Route::post('uploadServicesImage/{id}', 'BusinessController@uploadServicesImage');
+
+
+    // to get all options
+    Route::get('getOption', 'BusinessController@getOption');
+
+
+    // to upload image for every option bu using option_id
+    Route::post('uploadImageOption/{id}', 'BusinessController@uploadImageOption');
+
+
+    // to get all notification/appointment
+    Route::get('getNotification', 'BusinessController@getNotification');
+
+});
+
+                      //////////                service                    //////////
+
+Route::group(['prefix'=>'service','middleware'=>'api'],function () {
+
+                            //**          lab service            **//
+
+    // to add am or pm to time in lab service
+    Route::post('timePeriod','LabController@timePeriod');
+
+
+    // to get all appointments ( booked or not ) in lab service
+    Route::put('getDate', 'LabController@getDate');
+
+
+    // to book specific appointment in lab service by using id
+    Route::put('updateStatus', 'LabController@updateStatus');
+
+
+                           //**          meeting service            **//
+
+    // to get all departments in area
+    Route::get('getDepartment', 'MeetingController@getDepartment');
+
+
+    // to upload image for every department by using department_id
+    Route::post('uploadDeptImage/{id}', 'MeetingController@uploadDeptImage');
+
+
+    // to get all doctors that belong to a specific department by using department_id
+    Route::get('getDoctor', 'MeetingController@getDoctor');
+
+
+    // to upload image for every doctor by using doctor_id
+    Route::post('uploadDoctorImage/{id}', 'MeetingController@uploadDoctorImage');
+
+
+    // to get all available days
+    Route::get('getDayMeetings', 'MeetingController@getDayMeetings');
+
+
+    // to get all times that belongs to a specific day
+    Route::get('getTimeMeetings', 'MeetingController@getTimeMeetings');
+
+
+    // to book meeting
+    Route::post('bookMeeting', 'MeetingController@bookMeeting');
+});
+
+
+                      //////////               admin                    //////////
+
+Route::group(['prefix'=>'admin','middleware'=>'api'],function () {
+
+    // to get old password
+    Route::get('/showPassword','AdminController@showPassword');
+
+
+    // to get destination that belongs to a specific user by using user_id
+    Route::get('getDestination/{id}','AdminController@getDestination');
+
+
+    // to insert data by using carbon
+    Route::post('insertDates','AdminController@insertDates');
+
+
+    // to retrieve day instead of date
+    Route::get('retrieveDay/{id}','BookingController@retrieveDay');
+
+
 });
 
 

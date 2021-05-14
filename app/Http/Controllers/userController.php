@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Affair;
+use App\Models\Meeting;
+use App\Models\Problem;
+use App\Models\Rate;
+use App\Models\TimeLab;
+use App\Models\TimeMeeting;
 use App\Traits\GeneralTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
@@ -16,6 +23,7 @@ class userController extends Controller
     use GeneralTrait ;
 
 
+    // to sign up as a user or business
     public function register(Request $request) {
 
         $user = User::create([
@@ -36,6 +44,7 @@ class userController extends Controller
     }
 
 
+    // to login as a user or register
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -56,6 +65,7 @@ class userController extends Controller
     }
 
 
+    // to return user token
     protected function createNewToken($token)
     {
         $id =auth()->user()->id;
@@ -63,13 +73,15 @@ class userController extends Controller
     }
 
 
+    // to get into user profile
     public function userProfile()
     {
         $profile = [auth()->user()->avatar,auth()->user()->fullName,auth()->user()->phone,auth()->user()->email];
         return $this->returnData('user',$profile,'Welcome in your account','201');
     }
 
-     // to upload image for user profile //
+
+    // to change image profile
     public function upload(Request $request)
     {
         $user = User::find(auth()->user()->id);
@@ -93,6 +105,7 @@ class userController extends Controller
     }
 
 
+    // to change user name
     public function editName(Request $request)
     {
         $user = User::find(auth()->user()->id);
@@ -109,31 +122,20 @@ class userController extends Controller
     }
 
 
-    public function showPassword()
-    {
-        $user = User::find(auth()->user()->id);
-        if($user)
-        {
-            return $this->returnData('oldPassword',$user->password,
-                'read passowrd','201');
-        }
-        else
-        {
-            return $this->returnError('404','invalid id');
-        }
-    }
-
-
+    // to change user password
     public function editPassword(Request $request)
     {
         $this->validate($request, [
             'old_password'     => 'required',
             'new_password'     => 'required'
         ]);
+
         $data = $request->all();
 
         $user = User::find(auth()->user()->id);
-        if(!Hash::check($data['old_password'], $user->password)){
+
+        if(!Hash::check($data['old_password'], $user->password))
+        {
             return back()
                 ->with('error','The specified password does not match the database password');
         }
@@ -146,12 +148,103 @@ class userController extends Controller
     }
 
 
-    public function refresh()
+    // to contact with affair
+    public function getAffair(request $request)
     {
-        return $this->createNewToken(auth()->refresh());
+        if ($request->hasFile('inquiry')){
+            $imageExt = $request->file('inquiry')->getClientOriginalExtension();
+            $imageName = time().'.'.$imageExt;
+            $request->file('inquiry')->storeAs('/public',$imageName);
+
+            Affair::create([
+                'name' => $request->input('name'),
+                'idNumber' => $request->input('Id_Number'),
+                'email' => $request->input('email'),
+                'inquiry' => URL::to('/') . '/storage/' . $imageName ,
+                'area_id' => $request->input('area_id'),
+                'user_id' => auth()->user()->id
+            ]);
+
+            return $this->returnSuccessMessage('your image send successfully','201');
+        }
+        else
+        {
+            Affair::create([
+                'name' => $request->input('name'),
+                'idNumber' => $request->input('Id_Number'),
+                'email' => $request->input('email'),
+                'inquiry' => $request->input('inquiry'),
+                'user_id' => auth()->user()->id
+            ]);
+
+            return $this->returnSuccessMessage('your problem send successfully','201');
+        }
+
     }
 
 
+    // to send a problem
+    public function sendProblem(Request $request)
+    {
+        if ($request->hasFile('image'))
+        {
+            $imageExt = $request->file('image')->getClientOriginalExtension();
+            $imageName = time() . '.' . $imageExt;
+            $request->file('image')->storeAs('/public', $imageName);
+
+            $problem = Problem::create([
+                'comment' => $request->input('comment'),
+                'image' => URL::to('/') . '/storage/' . $imageName,
+                'user_id' => auth()->user()->id
+            ]);
+
+            $problem->save();
+
+            return $this->returnSuccessMessage('image saved successfully','201');
+        }
+
+    }
+
+
+    // te send rate
+    public function sendRate(Request $request)
+    {
+        Rate::create([
+            'value' => $request->input('value'),
+            'opinion' => $request->input('opinion') ,
+            'user_id' => auth()->user()->id
+        ]);
+
+        return $this->returnSuccessMessage('Rate send successfully','201');
+    }
+
+
+    // to delete appointment/notification in any service
+    public function deleteNotification(Request $request)
+    {
+        $notification = TimeLab::find($request->input('labId'));
+        $meeting = Meeting::find($request->input('meetingId'));
+
+
+        if($notification)
+        {
+            $notification->active = 0 ;
+            $notification->save();
+            return $this->returnSuccessMessage('201','This time is active now');
+        }
+
+        elseif($meeting)
+        {
+            $timeMeeting =TimeMeeting::find($request->input('timeMeetingId'));
+            $timeMeeting->active= 0;
+            $timeMeeting->save();
+            DB::delete('delete from meetings where id = ?',[$request->input('meetingId')]);
+        }
+
+    }
+
+
+    // to logout from profile
     public function logout()
     {
         auth()->logout();
@@ -160,38 +253,18 @@ class userController extends Controller
     }
 
 
+    // route that must done by using token
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
+
+    public function refresh()
+    {
+        return $this->createNewToken(auth()->refresh());
+    }
+
 }
 
 
-
-
-
-
-
-
-//        $validator = Validator::make($request->all(), [
-//            'fullName' => 'required',
-//            'email' => 'required|email|unique:users',
-//            'phone' => 'required',
-//            'password' => 'required',
-//            'title' => 'nullable' ,
-//            'busName' => 'nullable',
-//            'busCategory' => 'nullable' ,
-//            'busPhone' => 'nullable' ,
-//            'busWebsite' => 'nullable' ,
-//            'busEmail' => 'nullable' ,
-//        ]);
-//
-//        if($validator->fails()){
-//            return $this->returnError('402','You failed to sign up');
-//        }
-//
-//        $user = User::create(array_merge(
-//            $validator->validated(),
-//            ['password' => bcrypt($request->password)]
-//        ));

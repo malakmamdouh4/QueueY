@@ -38,6 +38,7 @@ class userController extends Controller
                 'busPhone' => $request->input('busPhone') ,
                 'busEmail' => $request->input('busEmail') ,
                 'busWebsite' => $request->input('busWebsite') ,
+                'avatar' => $request->input('avatar') ,
         ]);
 
         return $this->returnData('user',$user,'User registered successfully','201');
@@ -69,7 +70,7 @@ class userController extends Controller
     protected function createNewToken($token)
     {
         $id =auth()->user()->id;
-        return $this->returntoken('token',$token,'id',$id,'You logged successfully','201');
+        return $this->returntoken('user_id',$id,'user_token',$token,'You logged successfully','201');
     }
 
 
@@ -81,7 +82,7 @@ class userController extends Controller
     }
 
 
-    // to change image profile
+    // to change user_profile image
     public function upload(Request $request)
     {
         $user = User::find(auth()->user()->id);
@@ -113,7 +114,7 @@ class userController extends Controller
         {
             $user->fullName = $request->input('fullName');
             $user->save();
-            return $this->returnSuccessMessage('well, name is changed','201');
+            return $this->returnSuccessMessage('name is changed successfully','201');
         }
         else
         {
@@ -136,8 +137,9 @@ class userController extends Controller
 
         if(!Hash::check($data['old_password'], $user->password))
         {
-            return back()
-                ->with('error','The specified password does not match the database password');
+            return $this->returnError('404','The specified password does not match the database password');
+//            return back()
+//                ->with('error','The specified password does not match the database password');
         }
         else
         {
@@ -165,7 +167,7 @@ class userController extends Controller
                 'user_id' => auth()->user()->id
             ]);
 
-            return $this->returnSuccessMessage('your image send successfully','201');
+            return $this->returnSuccessMessage('we will contact you soon about this screen','201');
         }
         else
         {
@@ -174,10 +176,11 @@ class userController extends Controller
                 'idNumber' => $request->input('Id_Number'),
                 'email' => $request->input('email'),
                 'inquiry' => $request->input('inquiry'),
+                'area_id' => $request->input('area_id'),
                 'user_id' => auth()->user()->id
             ]);
 
-            return $this->returnSuccessMessage('your problem send successfully','201');
+            return $this->returnSuccessMessage('we will contact you soon about this problem','201');
         }
 
     }
@@ -200,7 +203,19 @@ class userController extends Controller
 
             $problem->save();
 
-            return $this->returnSuccessMessage('image saved successfully','201');
+            return $this->returnSuccessMessage('we work on solving your problem','201');
+        }
+        else
+        {
+            $problem = Problem::create([
+                'comment' => $request->input('comment'),
+                'image' => $request->input('image'),
+                'user_id' => auth()->user()->id
+            ]);
+
+            $problem->save();
+
+            return $this->returnSuccessMessage('we work on solving your problem','201');
         }
 
     }
@@ -215,15 +230,15 @@ class userController extends Controller
             'user_id' => auth()->user()->id
         ]);
 
-        return $this->returnSuccessMessage('Rate send successfully','201');
+        return $this->returnSuccessMessage('Thank you for opinion','201');
     }
 
 
     // to delete appointment/notification in any service
     public function deleteNotification(Request $request)
     {
-        $notification = TimeLab::find($request->input('labId'));
-        $meeting = Meeting::find($request->input('meetingId'));
+        $notification = TimeLab::find($request->input('lab_id'));
+        $meeting = Meeting::find($request->input('meeting_id'));
 
 
         if($notification)
@@ -235,10 +250,14 @@ class userController extends Controller
 
         elseif($meeting)
         {
-            $timeMeeting =TimeMeeting::find($request->input('timeMeetingId'));
+            $timeMeeting =TimeMeeting::find($request->input('timeMeeting_id'));
             $timeMeeting->active= 0;
             $timeMeeting->save();
-            DB::delete('delete from meetings where id = ?',[$request->input('meetingId')]);
+
+            DB::delete('delete from meetings where id = ?',[$request->input('meeting_id')]);
+
+            return $this->returnSuccessMessage('201','This time is active now and meeting is deleted');
+
         }
 
     }

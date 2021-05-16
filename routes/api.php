@@ -32,7 +32,7 @@ Route::group(['prefix'=>'user','middleware'=>'api'],function () {
     Route::get('/profile', 'userController@userProfile');
 
 
-    // to change image profile
+    // to change user_profile image
     Route::post('upload', 'userController@upload');
 
 
@@ -113,10 +113,6 @@ Route::group(['prefix'=>'service','middleware'=>'api'],function () {
 
                             //**          lab service            **//
 
-    // to add am or pm to time in lab service
-    Route::post('timePeriod','LabController@timePeriod');
-
-
     // to get all appointments ( booked or not ) in lab service
     Route::put('getDate', 'LabController@getDate');
 
@@ -170,6 +166,10 @@ Route::group(['prefix'=>'admin','middleware'=>'api'],function () {
 
     // to insert data by using carbon
     Route::post('insertDates','AdminController@insertDates');
+
+
+    // to add am or pm to time in lab service
+    Route::post('timePeriod','AdminController@timePeriod');
 
 
     // to retrieve day instead of date

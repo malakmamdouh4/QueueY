@@ -51,6 +51,17 @@ class AdminController extends Controller
 //    }
 
 
+    // to add am or pm to time in lab service
+    public function timePeriod()
+    {
+//        $lab = TimeLab::select('time')->where('id',1)->get();
+        $lab = "1:2";
+        $timePeriod =  date('h:i A', strtotime($lab));
+        return $timePeriod;
+    }
+
+
+
     public function insertDates()
     {
       for( $day = 1 ; $day <= 30 ; $day=+1 )

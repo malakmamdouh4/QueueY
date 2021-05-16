@@ -14,15 +14,6 @@ class LabController extends Controller
     use GeneralTrait;
 
 
-    // to add am or pm to time in lab service
-    public function timePeriod()
-    {
-//        $lab = TimeLab::select('time')->where('id',1)->get();
-        $lab = "1:2";
-        $timePeriod =  date('h:i A', strtotime($lab));
-        return $timePeriod;
-    }
-
 
     // to get all appointments ( booked or not ) in lab service
     public function getDate(Request $request) //dashboard
@@ -36,9 +27,9 @@ class LabController extends Controller
 //        }
 
 
-        $timelab = TimeLab::with('lab')->select('time', 'active','id', 'lab_id')
+        $timelab = TimeLab::with('lab')->select('id','time', 'active', 'lab_id')
             ->where('active', $request->query('active', 0))->get();
-        return $this->returnData('Appointment', $timelab, 'success', '201');
+        return $this->returnData('Appointment', $timelab, 'There are available times for booking with related day( id , date )', '201');
     }
 
 
@@ -47,12 +38,16 @@ class LabController extends Controller
     public function updateStatus(Request $request)
     {
         $date = TimeLab::find($request->input('timelab_id'));
+
         if ($date->active == 0) {
             $date->active = 1;
             $date->save();
-            return $this->returnSuccessMessage('Lab is booked successfully', '201');
-        } else {
-            return $this->returnError('404', 'This appointment already booked');
+
+            return $this->returnSuccessMessage('ohh, Lab is booked successfully :)', '201');
+        }
+        else
+        {
+            return $this->returnError('404', 'sorry, This appointment already booked :(');
         }
     }
 }

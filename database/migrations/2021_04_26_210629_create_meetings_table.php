@@ -22,6 +22,8 @@ class CreateMeetingsTable extends Migration
             $table->foreign('day_meeting_id')->references('id')->on('day_meetings');
             $table->unsignedBigInteger('time_meeting_id')->nullable();
             $table->foreign('time_meeting_id')->references('id')->on('time_meetings');
+            $table->unsignedBigInteger('service_id')->nullable();
+            $table->foreign('service_id')->references('id')->on('services');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('doctor_id')->nullable();

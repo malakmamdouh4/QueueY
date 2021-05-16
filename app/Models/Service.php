@@ -24,4 +24,9 @@ class Service extends Model
     {
         return $this->hasMany('App\Models\TimeLab','service_id');
     }
+
+    public function meeting()
+    {
+        return $this->hasMany('App\Models\Meeting','service_id');
+    }
 }

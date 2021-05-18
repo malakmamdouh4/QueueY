@@ -12,9 +12,11 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
+        "infyomlabs/laravel-ui-adminlte": "^2.0",
         "laravel/framework": "^7.29",
         "laravel/sanctum": "^2.10",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "^2.0",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

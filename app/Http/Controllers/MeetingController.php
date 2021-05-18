@@ -120,6 +120,7 @@ class MeetingController extends Controller
 
         if($timeMeeting->active == 0 && $dayMeeting->active == 0)
 
+        {
             Meeting::create([
                 'name' => $request->input('name'),
                 'idNumber' => $request->input('Id_Number'),
@@ -133,13 +134,19 @@ class MeetingController extends Controller
             $timeMeeting->active = 1;
             $timeMeeting->save();
 
-            if ($labs == 0)
+            if ($labs == 1)
             {
                 $dayMeeting->active = 1;
                 $dayMeeting->save();
+
+                return $this->returnSuccessMessage('This day is not available now:) ', '201');
+
             }
 
-             return $this->returnSuccessMessage('Booking Meeting done successfully :) ', '201');
+            return $this->returnSuccessMessage('Booking Meeting done successfully :) ', '201');
+        }
+
+
     }
 
 }

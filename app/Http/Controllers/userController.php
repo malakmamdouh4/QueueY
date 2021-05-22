@@ -276,6 +276,7 @@ class userController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        auth()->setDefaultDriver('api');
     }
 
 

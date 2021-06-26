@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\User;
 use App\Models\Destination;
 use App\Models\Meeting;
 use App\Models\Option;
@@ -11,6 +12,7 @@ use App\Models\TimeLab;
 use App\Models\TimeMeeting;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
 
@@ -146,6 +148,13 @@ class BusinessController extends Controller
 
         $data =[$timelab,$meeting];
         return $this->returnData('Booked Dates',$data,'There are all booked appointments','201');
+    }
+
+
+    public function userNumber()
+    {
+        $userNumber = DB::table('users')->pluck('id')->count();
+        return view('layouts.dashboard')->with('userNumber', $userNumber) ;
     }
 
 

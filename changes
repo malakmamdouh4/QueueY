@@ -6,9 +6,36 @@
 
 
 
-
-
-
 راجعييي ميثود ديليت نوتيفيكيشن
 + ميثوود حجز ميتنج
 واحط ال id بتاعهم ك ريكوست لما اعمل ميثود حجز ميتنج
+
+
+
+dashboard :
+
+1) admin :-
+- add destination
+- delete destination
+- show users
+- show business
+- delete users
+- show business
+- add options / delete
+- show problems ( messages )
+- show rates / messages
+
+
+2) business :-
+- add areas
+- add services
+- add times for lab service
+- add departments
+- add doctors
+- add times for meeting service
+- show affair ( messages )
+- show users / delete
+- show rates / messages
+- show / add locations
+- recommendation for service more used
+

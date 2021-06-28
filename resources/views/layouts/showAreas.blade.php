@@ -37,20 +37,24 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th style="width: 33%"> Id </th>
-                    <th style="width: 33%"> image </th>
-                    <th style="width: 33%"> Deletion </th>
+                    <th style="width: 20%"> Id </th>
+                    <th style="width: 20%"> image </th>
+                    <th style="width: 20%"> Addition </th>
+                    <th style="width: 20%"> Edition </th>
+                    <th style="width: 20%"> Deletion </th>
                 </tr>
                 </thead>
                 @if(count($areas) > 0)
                     @foreach($areas as $area)
                         <tr>
-                            <td style="width: 33%">{{$area->id}}</td>
-                            <td style="width: 33%">{{$area->image}}</td>
+                            <td style="width: 20%">{{$area->id}}</td>
+                            <td style="width: 20%">  <img src="{{$area->image}}"> </td>
                             <form action="{{route('deleteArea',$area->id)}}" method="post">
                                 <input type="hidden" name="_method" value="Delete">
                                 @csrf
-                              <td style="width: 33%"> <button class="btn btn-danger"> Delete </button> </td>
+                                <td style="width: 20%"> <button class="btn btn-primary"> Add </button> </td>
+                                <td style="width: 20%"> <button class="btn btn-success"> Edit </button> </td>
+                                <td style="width: 20%"> <button class="btn btn-danger"> Delete </button> </td>
                             </form>
                         </tr>
                     @endforeach

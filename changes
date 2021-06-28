@@ -34,7 +34,7 @@ dashboard :
 - add doctors
 - add times for meeting service
 - show affair ( messages )
-- show users / delete
+- show users / delete                ( done )
 - show rates / messages
 - show / add locations
 - recommendation for service more used

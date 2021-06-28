@@ -33,21 +33,21 @@
 <body style="background-color: #d0cccc">
     <div class="box" style="background-color: white ; border-radius: 8px ; margin:auto ; width:70% ; margin-top: 30px ; padding: 10px">
         <div class="box-body">
-            <p style="text-align: center; font-size: 30px ;padding: 6px"> <i class="far fa-user-circle">  </i> Users : </p>
+            <p style="text-align: center; font-size: 30px ;padding: 6px"> <i class="far fa-user-circle">  </i> Areas : </p>
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th style="width: 33%"> Id </th>
-                    <th style="width: 33%"> FullName </th>
-                    <th style="width: 33%"> Action </th>
+                    <th style="width: 33%"> image </th>
+                    <th style="width: 33%"> Deletion </th>
                 </tr>
                 </thead>
-                @if(count($users) > 0)
-                    @foreach($users as $user)
+                @if(count($areas) > 0)
+                    @foreach($areas as $area)
                         <tr>
-                            <td style="width: 33%">{{$user->id}}</td>
-                            <td style="width: 33%">{{$user->fullName}}</td>
-                            <form action="{{route('deleteUser',$user->id)}}" method="post">
+                            <td style="width: 33%">{{$area->id}}</td>
+                            <td style="width: 33%">{{$area->image}}</td>
+                            <form action="{{route('deleteArea',$area->id)}}" method="post">
                                 <input type="hidden" name="_method" value="Delete">
                                 @csrf
                               <td style="width: 33%"> <button class="btn btn-danger"> Delete </button> </td>

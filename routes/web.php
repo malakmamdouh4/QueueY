@@ -18,9 +18,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/showUsers','BusinessController@showUsers');
 
-//Route::get('userNumber','BusinessController@userNumber');
+Route::delete('/deleteUser/{id}','BusinessController@deleteUser')->name('deleteUser');
+
+Route::get('/showAreas','BusinessController@showAreas');
+
+Route::delete('/deleteArea/{id}','BusinessController@deleteArea')->name('deleteArea');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $userNumber = DB::table('users')->pluck('id')->count();
+        $areaNumber = DB::table('areas')->pluck('id')->count();
+
+        return view('layouts.dashboard')
+            ->with('userNumber', $userNumber)
+            ->with('areaNumber',$areaNumber) ;
     }
 }

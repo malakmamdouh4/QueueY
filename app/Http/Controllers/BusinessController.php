@@ -151,10 +151,32 @@ class BusinessController extends Controller
     }
 
 
-    public function userNumber()
+
+    public function showUsers()
     {
-        $userNumber = DB::table('users')->pluck('id')->count();
-        return view('layouts.dashboard')->with('userNumber', $userNumber) ;
+        $users = User::all();
+        return view('layouts.showUsers')->with('users',$users);
+    }
+
+
+    public function deleteUser($id)
+    {
+        $user = User::find($id)->destroy($id);
+        return redirect()->back();
+    }
+
+
+    public function showAreas()
+    {
+        $areas = Area::all();
+        return view('layouts.showAreas')->with('areas',$areas);
+    }
+
+
+    public function deleteArea($id)
+    {
+        $area = Area::find($id)->destroy($id);
+        return redirect()->back();
     }
 
 

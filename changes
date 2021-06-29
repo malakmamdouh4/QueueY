@@ -27,15 +27,32 @@ dashboard :
 
 
 2) business :-
-- add areas
-- add services
-- add times for lab service
-- add departments
-- add doctors
+- add areas  ( done )
+- add services ( done )
+- add departments  ( done )
+- add doctors ( done )
+- show users / delete     ( done )
+
+
 - add times for meeting service
 - show affair ( messages )
-- show users / delete                ( done )
 - show rates / messages
 - show / add locations
 - recommendation for service more used
+
+- add times for lab service
+
+
+
+
+
+
+
+
+
+
+
+
+Q :
+how to delete user related to another table ??
 

@@ -180,4 +180,25 @@ class BusinessController extends Controller
     }
 
 
+    public function showEditAreas($id)
+    {
+        $area = Area::find($id);
+        return view('layouts.showEditAreas')->with('area',$area);
+    }
+
+    public function editArea($id,Request $request)
+    {
+        $area = Area::find($id);
+        if ($area && $request->hasFile('image')) {
+            $imageExt = $request->file('image')->getClientOriginalExtension();
+            $imageName = time() . '.' . $imageExt;
+            $request->file('image')->storeAs('/public', $imageName);
+            $area->image = $request->input('image');
+            $area->save();
+
+//            return redirect()->back()->with('msg','Upload OK');
+            return "done";
+        }
+    }
+
 }

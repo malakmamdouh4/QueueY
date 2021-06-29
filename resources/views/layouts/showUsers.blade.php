@@ -30,23 +30,25 @@
 
 
 
-<body style="background-color: #d0cccc">
+<body style="background-color: #eeecec">
     <div class="box" style="background-color: white ; border-radius: 8px ; margin:auto ; width:70% ; margin-top: 30px ; padding: 10px">
         <div class="box-body">
             <p style="text-align: center; font-size: 30px ;padding: 6px"> <i class="far fa-user-circle">  </i> Users : </p>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th style="width: 33%"> Id </th>
                     <th style="width: 33%"> FullName </th>
+                    <th style="width: 33%"> Email </th>
+                    <th style="width: 33%"> Phone </th>
                     <th style="width: 33%"> Action </th>
                 </tr>
                 </thead>
                 @if(count($users) > 0)
                     @foreach($users as $user)
                         <tr>
-                            <td style="width: 33%">{{$user->id}}</td>
                             <td style="width: 33%">{{$user->fullName}}</td>
+                            <td style="width: 33%">{{$user->email}}</td>
+                            <td style="width: 33%">{{$user->phone}}</td>
                             <form action="{{route('deleteUser',$user->id)}}" method="post">
                                 <input type="hidden" name="_method" value="Delete">
                                 @csrf

@@ -31,43 +31,32 @@
 
 
 <body style="background-color: #eeecec">
-    <div class="box" style="background-color: white ; border-radius: 8px ; margin:auto ; width:70% ; margin-top: 30px ; padding: 10px">
-        <div class="box-body">
+<div class="box" style="background-color: white ; border-radius: 8px ; margin:auto ; width:70% ; margin-top: 30px ; padding: 10px">
+    <div class="box-body">
 
-            @if (session('msg'))
-                <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{session('msg')}}
-                </div>
-            @endif
 
-            <p style="width: 90% ; font-size: 30px ;padding: 6px ; display: inline-block"> <i class="far fa-user-circle">  </i> Areas : </p>
-            <td style="width: 10%"> <a href="{{ url('showAddAreas') }}">  <button class="btn btn-primary"> Add </button> </a> </td>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th style="width: 20%"> image </th>
-                    <th style="width: 20%"> Edition </th>
-                    <th style="width: 20%"> Deletion </th>
-                </tr>
-                </thead>
-                @if(count($areas) > 0)
-                    @foreach($areas as $area)
-                        <tr>
-                            <td style="width: 20%">  <img src="{{$area->image}}"> </td>
-                            <td style="width: 20%"> <a href="{{ url('showEditAreas',$area->id) }}"> <button class="btn btn-success"> Edit   </button> </a> </td>
-
-                            <form action="{{route('deleteArea',$area->id)}}" method="post">
-                                <input type="hidden" name="_method" value="Delete">
-                                @csrf
-                                <td style="width: 20%"> <button class="btn btn-danger"> Delete </button> </td>
-                            </form>
-                        </tr>
-                    @endforeach
-                @endif
-            </table>
-        </div>
+        <p style="width: 90% ; font-size: 30px ;padding: 6px ; display: inline-block"> <i class="far fa-user-circle">  </i> Areas : </p>
+        <form action="{{route('editArea',$area->id)}}" method="post" style="display: inline-block">
+            @csrf
+            <td style="width: 10%"> <button class="btn btn-info"> Save </button> </td>
+        </form>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 20%"> image of area </th>
+            </tr>
+            </thead>
+                    <tr>
+                        <td style="width: 20%">
+                            <img src="{{$area->image}}">
+                            <div class="form-group">
+                                <input type="file" name="image" id="image" class="form-control" style="border: none ; margin: 10px "/>
+                            </div>
+                        </td>
+                    </tr>
+        </table>
     </div>
+</div>
 
 
 

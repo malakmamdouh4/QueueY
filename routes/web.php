@@ -30,3 +30,16 @@ Route::delete('/deleteUser/{id}','BusinessController@deleteUser')->name('deleteU
 Route::get('/showAreas','BusinessController@showAreas');
 
 Route::delete('/deleteArea/{id}','BusinessController@deleteArea')->name('deleteArea');
+
+Route::get('showEditAreas/{id}','BusinessController@showEditAreas')->name('showEditAreas');
+
+Route::post('editArea/{id}','BusinessController@editArea')->name('editArea');
+
+Route::get('showAddAreas','BusinessController@showAddAreas');
+
+
+
+
+
+
+

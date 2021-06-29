@@ -157,23 +157,13 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
-            <img src="{{ url('/dashboard/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            <img src="{{ url('/dashboard/dist/img/logo.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                  style="opacity: .8">
-            <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <span class="brand-text font-weight-light"> Queue Y</span>
         </a>
 
         <!-- Sidebar -->
         <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="{{ url('/dashboard/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info">
-                    <a href="#" class="d-block">Alexander Pierce</a>
-                </div>
-            </div>
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -732,15 +722,14 @@
 
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid">
+            <div class="container-fluid" style="margin:auto; width: 90%">
                 <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <div class="col-lg-3 col-6">
+                <div class="row" style="padding-left:40px">
+                    <div class="col-lg-5 col-6" style="margin-right: 90px">
                         <!-- small box -->
                         <div class="small-box bg-info">
-                            <div class="inner">
+                            <div class="inner" style="padding-left:40px">
                                 <h3> {{ $userNumber }} </h3>
-
                                 <p> Users </p>
                             </div>
                             <div class="icon">
@@ -750,12 +739,11 @@
                         </div>
                     </div>
                     <!-- ./col -->
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-5 col-6">
                         <!-- small box -->
                         <div class="small-box bg-success">
-                            <div class="inner">
+                            <div class="inner" style="padding-left:40px">
                                 <h3> {{ $areaNumber }} </h3>
-
                                 <p>Areas</p>
                             </div>
                             <div class="icon">
@@ -765,31 +753,45 @@
                         </div>
                     </div>
                     <!-- ./col -->
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-5 col-6" style="margin-right: 90px">
                         <!-- small box -->
                         <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3>44</h3>
+                            <div class="inner" style="padding-left:40px">
+                                <h3> 5 </h3>
 
-                                <p>User Registrations</p>
+                                <p> Services </p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-person-add"></i>
+                                <i class="fas fa-cubes"></i>
                             </div>
                             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-5 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>65</h3>
+                        <div class="small-box" style="background-color: #8f8b8b">
+                            <div class="inner" style="padding-left:40px">
+                                <h3> 4 </h3>
 
-                                <p>Unique Visitors</p>
+                                <p> Departments </p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
+                                <i class="fa fa-server"></i>
+                            </div>
+                            <a href="{{ url('showUsers') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-5 col-6" style="margin: auto ">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner" style="padding-left:40px">
+                                <h3>10</h3>
+
+                                <p>Doctors</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-users"></i>
                             </div>
                             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
@@ -837,7 +839,7 @@
                         <!-- DIRECT CHAT -->
                         <div class="card direct-chat direct-chat-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Direct Chat</h3>
+                                <h3 class="card-title"> Affair Messages </h3>
 
                                 <div class="card-tools">
                                     <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span>
@@ -857,64 +859,32 @@
                                 <!-- Conversations are loaded here -->
                                 <div class="direct-chat-messages">
                                     <!-- Message. Default to the left -->
-                                    <div class="direct-chat-msg">
+                                    <div class="direct-chat-msg" style="margin-top: 20px">
                                         <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                            <span class="direct-chat-name float-left"> user1 </span>
                                             <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
                                         </div>
                                         <!-- /.direct-chat-infos -->
                                         <img class="direct-chat-img" src="{{ url('/dashboard/dist/img/user1-128x128.jpg') }}" alt="message user image">
                                         <!-- /.direct-chat-img -->
                                         <div class="direct-chat-text">
-                                            Is this template really for free? That's unbelievable!
-                                        </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-
-                                    <!-- Message to the right -->
-                                    <div class="direct-chat-msg right">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                            <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                                        </div>
-                                        <!-- /.direct-chat-infos -->
-                                        <img class="direct-chat-img" src="{{ url('/dashboard/dist/img/user3-128x128.jpg') }}" alt="message user image">
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            You better believe it!
+                                            I have a problem in Booking lab !
                                         </div>
                                         <!-- /.direct-chat-text -->
                                     </div>
                                     <!-- /.direct-chat-msg -->
 
                                     <!-- Message. Default to the left -->
-                                    <div class="direct-chat-msg">
+                                    <div class="direct-chat-msg" style="margin-top: 20px">
                                         <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                            <span class="direct-chat-name float-left"> user2 </span>
                                             <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
                                         </div>
                                         <!-- /.direct-chat-infos -->
                                         <img class="direct-chat-img" src="{{ url('/dashboard/dist/img/user1-128x128.jpg') }}" alt="message user image">
                                         <!-- /.direct-chat-img -->
                                         <div class="direct-chat-text">
-                                            Working with AdminLTE on a great new app! Wanna join?
-                                        </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-
-                                    <!-- Message to the right -->
-                                    <div class="direct-chat-msg right">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                            <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                                        </div>
-                                        <!-- /.direct-chat-infos -->
-                                        <img class="direct-chat-img" src="{{ url('/dashboard/dist/img/user3-128x128.jpg') }}" alt="message user image">
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            I would love to.
+                                            I have a problem in booking meeting with doctor !
                                         </div>
                                         <!-- /.direct-chat-text -->
                                     </div>
@@ -1022,14 +992,14 @@
                                 <!-- /.direct-chat-pane -->
                             </div>
                             <!-- /.card-body -->
-                            <div class="card-footer">
-                                <form action="#" method="post">
-                                    <div class="input-group">
-                                        <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                                        <span class="input-group-append">
-                      <button type="button" class="btn btn-primary">Send</button>
-                    </span>
-                                    </div>
+{{--                            <div class="card-footer">--}}
+{{--                                <form action="#" method="post">--}}
+{{--                                    <div class="input-group">--}}
+{{--                                        <input type="text" name="message" placeholder="Type Message ..." class="form-control">--}}
+{{--                                        <span class="input-group-append">--}}
+{{--                      <button type="button" class="btn btn-primary">Send</button>--}}
+{{--                    </span>--}}
+{{--                                    </div>--}}
                                 </form>
                             </div>
                             <!-- /.card-footer-->
